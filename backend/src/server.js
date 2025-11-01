@@ -8,7 +8,7 @@ const app=express();
 const __dirname=path.resolve();
 console.log(process.env.PORT);
 
-if(ENV.NODE_ENV==="development"){
+if(ENV.NODE_ENV==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")));
     app.get("/{*any}",(req,res)=>{
         res.sendFile(path.join(__dirname,"../frontend","dist","index.html"));
