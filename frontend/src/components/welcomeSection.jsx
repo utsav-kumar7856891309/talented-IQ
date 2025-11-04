@@ -4,6 +4,8 @@ import { ArrowRightIcon, SparklesIcon, ZapIcon } from "lucide-react";
 function WelcomeSection({ onCreateSession }) {
   const { user } = useUser();
 
+  
+
   return (
     <div className="relative overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6 py-16">
