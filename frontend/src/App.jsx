@@ -1,33 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { SignInButton, SignOutButton, SignedIn,SignedOut, UserButton} from '@clerk/clerk-react'
+import { useUser } from "@clerk/clerk-react";
+import { Navigate, Route, Routes } from "react-router";
+import HomePage from "./pages/HomePage";
+
+import { Toaster } from "react-hot-toast";
+import DashboardPage from "./pages/DashboardPage";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isSignedIn, isLoaded } = useUser();
+
+  // this will get rid of the flickering effect
+  if (!isLoaded) return null;
 
   return (
     <>
-     <h1 className='text-red-50'>welcome to the app</h1>
-     <button className='btn btn-primary'>click me</button>
-     <SignedOut>
-        <SignInButton mode="modal">
-          <button>Sign in</button>
-        </SignInButton>
-      </SignedOut>
+      <Routes>
+        <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
+        <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
+      </Routes>
 
-      
-      <SignedIn>
-        <UserButton />
-        <SignOutButton mode="modal">
-          <button>Sign out</button>
-        </SignOutButton>
-      </SignedIn>
-   
-   
-      
+      <Toaster toastOptions={{ duration: 3000 }} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
